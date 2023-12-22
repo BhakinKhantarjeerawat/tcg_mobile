@@ -53,31 +53,31 @@ Dio dio(DioRef ref) {
 }
 
 /// incase issues on repository (different API Content-Type)
-@riverpod
-Dio dioPatch(DioRef ref) {
-  final dio = Dio();
-  // const storage = FlutterSecureStorage();
-  // final token = ref.watch(getSecureTokenProvider).value;
-  // String tokenWithBearer = "Bearer ${token!}";
-  // if (tokenWithBearer == null) {
-  //   debugPrint("TOKEN BEARER IS NULL!");
-  // }
-  debugPrint("TOKEN:");
-  // debugPrint(token.toString());
-  dio.interceptors.add(LoggerInterceptor());
-  return Dio(
-    BaseOptions(
-        baseUrl: "https://api.ata-payroll.com/api/",
-        connectTimeout: const Duration(milliseconds: 5000),
-        receiveTimeout: const Duration(milliseconds: 5000),
-        queryParameters: {
-          // 'api_key': Env.tmdbKey,
-        },
-        responseType: ResponseType.json,
-        headers: {
-          "Content-Type": "application/merge-patch+json",
-          //TODO: tokenWithBearer
-          "Authorization": "tokenWithBearer"
-        }),
-  );
-}
+// @riverpod
+// Dio dioPatch(DioRef ref) {
+//   final dio = Dio();
+//   // const storage = FlutterSecureStorage();
+//   // final token = ref.watch(getSecureTokenProvider).value;
+//   // String tokenWithBearer = "Bearer ${token!}";
+//   // if (tokenWithBearer == null) {
+//   //   debugPrint("TOKEN BEARER IS NULL!");
+//   // }
+//   debugPrint("TOKEN:");
+//   // debugPrint(token.toString());
+//   dio.interceptors.add(LoggerInterceptor());
+//   return Dio(
+//     BaseOptions(
+//         baseUrl: "https://api.ata-payroll.com/api/",
+//         connectTimeout: const Duration(milliseconds: 5000),
+//         receiveTimeout: const Duration(milliseconds: 5000),
+//         // queryParameters: {
+//         //   // 'api_key': Env.tmdbKey,
+//         // },
+//         responseType: ResponseType.json,
+//         headers: {
+//           "Content-Type": "application/merge-patch+json",
+//           //TODO: tokenWithBearer
+//           "Authorization": "tokenWithBearer"
+//         }),
+//   );
+// }

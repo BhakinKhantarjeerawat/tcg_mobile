@@ -34,21 +34,5 @@ final dioProvider = AutoDisposeProvider<Dio>.internal(
 );
 
 typedef DioRef = AutoDisposeProviderRef<Dio>;
-String _$dioPatchHash() => r'3100f4fc54b5c9b602cceb6afa5d677a10f00a4e';
-
-/// incase issues on repository (different API Content-Type)
-///
-/// Copied from [dioPatch].
-@ProviderFor(dioPatch)
-final dioPatchProvider = AutoDisposeProvider<Dio>.internal(
-  dioPatch,
-  name: r'dioPatchProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$dioPatchHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef DioPatchRef = AutoDisposeProviderRef<Dio>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
