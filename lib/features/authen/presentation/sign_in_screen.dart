@@ -4,7 +4,12 @@ import 'package:my_tcg_mobile/consts/app_colors.dart';
 import 'package:my_tcg_mobile/consts/app_sizes.dart';
 import 'package:my_tcg_mobile/consts/button_styles.dart';
 import 'package:my_tcg_mobile/features/authen/presentation/email_signin_controller.dart';
+import 'package:my_tcg_mobile/route/route_master.dart';
 import 'package:my_tcg_mobile/utils/async_value_ui.dart';
+
+final authenStatusProvider = StateProvider<bool>((ref) {
+  return false;
+});
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -33,13 +38,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AsyncValue>(
-      emailSignInControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
+    // ref.listen<AsyncValue>(
+    //   emailSignInControllerProvider,
+    //   (_, state) => state.showAlertDialogOnError(context),
+    // );
     final state = ref.watch(emailSignInControllerProvider);
-    // final companies = ref.watch(fetchCompaniesProvider);
-    // final selectedCompany = ref.watch(selectedCompanyProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -115,44 +118,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       child: ElevatedButton(
                         style: AppButtonStyle.primary,
                         onPressed: () async {
-
-                          // final bool isSuccess = await ref
-                          //     .read(emailSignInControllerProvider.notifier)
-                          //     .emailSignIn(
-                          //         email: _emailController.text
-                          //             .trim()
-                          //             .toLowerCase(),
-                          //         password: _passwordController.text.trim());
-                          // if (isSuccess) {
-                          //   // save AuthStatus to access sub screen
-                          //   await ref.read(secureStorageProvider).saveEmail(
-                          //       _emailController.text.trim().toLowerCase());
-                          //   _emailController.clear();
-                          //   _passwordController.clear();
-                          //   // ref.invalidate(secureStorageProvider);
-
-                          //   await ref
-                          //       .read(secureStorageProvider)
-                          //       .saveAuthStatus('notSignedIn');
-
-                          //   // navigate
-                          //   ref
-                          //       .read(routemasterDelegateProvider)
-                          //       .push('/intro1');
-                          // }
-
+                          // ref.read(authenStatusProvider.notifier).state = true;
+                          ref
+                              .read(routemasterDelegateProvider)
+                              .push('/homeScreen');
                         },
                         child: const Text(
                           "Sign in",
                         ),
                       ),
                     ),
-              gapH30,
-              TextButton(
-                  child: const Text(
-                    'Forget password',
-                  ),
-                  onPressed: () {}),
             ],
           ),
         ),

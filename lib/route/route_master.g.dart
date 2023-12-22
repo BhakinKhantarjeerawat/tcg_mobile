@@ -7,7 +7,7 @@ part of 'route_master.dart';
 // **************************************************************************
 
 String _$routemasterDelegateHash() =>
-    r'f97c5ffc980898c67e404bbcafd81b5898bc12a0';
+    r'838d9c2bfd30f7f3c1e1d15e37be3229d753a69b';
 
 /// See also [routemasterDelegate].
 @ProviderFor(routemasterDelegate)

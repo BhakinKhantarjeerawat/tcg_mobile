@@ -4,8 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'dio.g.dart';
 
 @riverpod
-Dio dio(DioRef ref, { required baseOptions}) {
-    return Dio(
-    baseOptions
-  );
+Dio dio(DioRef ref) {
+    return Dio();
 }

@@ -12,10 +12,11 @@ class EmailSignInController extends _$EmailSignInController {
     required String email,
     required String password,
   }) async {
-    final authRepository = ref.watch(authRepositoryNoTokenProvider);
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-        () => authRepository.emailSignIn(email: email, password: password));
-    return state.hasError == false;
+    final authRepository = ref.watch(fetchHomeProvider);
+    // state = const AsyncValue.loading();
+    // state = await AsyncValue.guard(
+    //     () => authRepository.emailSignIn(email: email, password: password));
+    // return state.hasError == false;
+    return true;
   }
 }

@@ -9,35 +9,34 @@ part 'route_master.g.dart';
 
 @riverpod
 RoutemasterDelegate routemasterDelegate(RoutemasterDelegateRef ref) {
-  // final authStatus = ref.watch(getAuthStatusProvider).value;
-  const authStatus = 'notSignedIn';
-
+  final authStatus = ref.watch(authenStatusProvider);
   return RoutemasterDelegate(
       observers: [MyObserver()],
       routesBuilder: (context) {
         switch (authStatus) {
-          case 'notSignedIn':
+          case false:
             return RouteMap(
               onUnknownRoute: (context) => const Redirect('/'),
               routes: {
                 '/': (_) => const MaterialPage(child: SignInScreen()),
+                '/homeScreen': (_) => const MaterialPage(child: HomeScreen()),
               },
             );
-          case 'loggedIn':
+          case true:
             return RouteMap(
               onUnknownRoute: (_) => const Redirect('/'),
               routes: {
-                '/': (_) => const MaterialPage(child: HomeScreen()),
+                '/homeScreen': (_) => const MaterialPage(child: HomeScreen()),
               },
             );
         }
 
-        /// this is the duplicate of (signedIn) if riverpod return null value (becasue loading, error ,or the true null)
-        return RouteMap(
-          onUnknownRoute: (context) => const Redirect('/'),
-          routes: {
-            '/': (_) => const MaterialPage(child: SignInScreen()),
-          },
-        );
+        // /// this is the duplicate of (signedIn) if riverpod return null value (becasue loading, error ,or the true null)
+        // return RouteMap(
+        //   onUnknownRoute: (context) => const Redirect('/'),
+        //   routes: {
+        //     '/': (_) => const MaterialPage(child: SignInScreen()),
+        //   },
+        // );
       });
 }

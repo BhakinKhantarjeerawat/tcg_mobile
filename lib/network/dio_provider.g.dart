@@ -20,19 +20,5 @@ final dioNoTokenProvider = AutoDisposeProvider<Dio>.internal(
 );
 
 typedef DioNoTokenRef = AutoDisposeProviderRef<Dio>;
-String _$dioHash() => r'65c2005d3dc80ad10cdce5b3260200fce46b9e8d';
-
-/// See also [dio].
-@ProviderFor(dio)
-final dioProvider = AutoDisposeProvider<Dio>.internal(
-  dio,
-  name: r'dioProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$dioHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef DioRef = AutoDisposeProviderRef<Dio>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
