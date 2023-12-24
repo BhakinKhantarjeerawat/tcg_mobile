@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_tcg_mobile/consts/app_sizes.dart';
 import 'package:my_tcg_mobile/features/authen/data/auth_repository.dart';
+import 'package:my_tcg_mobile/features/authen/presentation/sign_in_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -14,18 +14,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     bool isButtonPressed = false;
   @override
   Widget build(BuildContext context) {
-        final object = ref.watch(fetchHomeProvider);
+    final userId = ref.watch(loginResultProvider);
+final userData = ref.watch(fetchUserDataProvider(id: userId));
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: object.isLoading ? Colors.red : Colors.green,
+        backgroundColor: Colors.green,
       ),
-      body: object.when(
+      body: userData.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, st) => Text(e.toString()),
-        data: (object) => SingleChildScrollView(
+        data: (data) => SingleChildScrollView(
           child: Column(
             children: [
-              Text(object),
+              Text(data.toString()),
             ],
           ),
         ),

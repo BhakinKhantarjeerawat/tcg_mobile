@@ -1,11 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_tcg_mobile/consts/app_colors.dart';
 import 'package:my_tcg_mobile/consts/app_sizes.dart';
 import 'package:my_tcg_mobile/consts/button_styles.dart';
-import 'package:my_tcg_mobile/features/authen/presentation/email_signin_controller.dart';
+import 'package:my_tcg_mobile/features/authen/model/login_responses.dart';
 import 'package:my_tcg_mobile/route/route_master.dart';
-import 'package:my_tcg_mobile/utils/async_value_ui.dart';
+
+final loginResultProvider = StateProvider<String>(
+  (ref) => '',
+);
 
 final authenStatusProvider = StateProvider<bool>((ref) {
   return false;
@@ -36,13 +40,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   bool isLoggedIn = false;
   String name = '';
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     // ref.listen<AsyncValue>(
     //   emailSignInControllerProvider,
     //   (_, state) => state.showAlertDialogOnError(context),
     // );
-    final state = ref.watch(emailSignInControllerProvider);
+    // final state = ref.watch(emailSignInControllerProvider);
+    // final returnData = ref.watch(emailSignInControllerProvider).value;
+    // print(returnData!.id.toString());
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -52,11 +60,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // if (returnData != null) Text(returnData),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
-                  enabled: state.isLoading ? false : true,
+                  // enabled: state.isLoading ? false : true,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
@@ -79,7 +88,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
-                  enabled: state.isLoading ? false : true,
+                  // enabled: state.isLoading ? false : true,
                   controller: _passwordController,
                   obscureText: _isVisible,
                   decoration: InputDecoration(
@@ -108,26 +117,48 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
               ),
               gapH30,
-              state.isLoading
-                  ? const CircularProgressIndicator()
-                  : Container(
-                      height: 51,
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      width: double.maxFinite,
-                      child: ElevatedButton(
+              Container(
+                height: 51,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                width: double.maxFinite,
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
                         style: AppButtonStyle.primary,
                         onPressed: () async {
-                          // ref.read(authenStatusProvider.notifier).state = true;
-                          ref
-                              .read(routemasterDelegateProvider)
-                              .push('/homeScreen');
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            final dio = Dio();
+                            final response = await dio.post(
+                                'https://mytcg.net/api/create/record/forgood',
+                                data: {
+                                  "date": "2023-12-22",
+                                  "type": "อื่น",
+                                  "user_id": 19,
+                                  "note": _emailController.text
+                                });
+                            final object = LoginResponse.fromMap(response.data);
+                            debugPrint(object.id.toString());
+                            ref.read(loginResultProvider.notifier).state =
+                                object.id.toString();
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ref
+                                .read(routemasterDelegateProvider)
+                                .push('/homeScreen');
+                          } catch (e, st) {
+                            debugPrint(e.toString());
+                          }
                         },
                         child: const Text(
                           "Sign in",
                         ),
                       ),
-                    ),
+              ),
             ],
           ),
         ),

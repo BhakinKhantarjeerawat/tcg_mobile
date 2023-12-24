@@ -30,6 +30,7 @@ dependencies:
   custom_refresh_indicator: ^2.2.1
   get_storage: ^2.1.1
   dropdown_button2: ^2.3.9
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -45,8 +46,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/images/
+#  assets:
+#    - assets/images/
 
   # example:
   # fonts:
