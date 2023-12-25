@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:my_tcg_mobile/network/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,3 +33,5 @@ Future<String> login(LoginRef ref) async {
   debugPrint(response.data.toString());
   return response.data.toString();
 }
+
+

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_tcg_mobile/consts/app_colors.dart';
 import 'package:my_tcg_mobile/consts/app_sizes.dart';
